@@ -14,6 +14,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include "stdbool.h"
 
 /// The maximum number of digits allowed in a big int.
 #define MAX_DIGITS 80
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
   printf("Please enter a number: ");
   scanf("%s", userinput);
   digits_count = strlen(userinput);
-	convertedNumbers = trtobig_int(&userinput, digits_count, &big_int);
+	convertedNumbers = strtobig_int(&userinput, digits_count, &big_int);
 
 
 
