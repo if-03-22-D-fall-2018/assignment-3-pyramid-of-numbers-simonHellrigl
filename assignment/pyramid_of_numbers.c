@@ -88,8 +88,9 @@ int main(int argc, char *argv[])
   printf("Please enter a number: ");
   scanf("%s", userinput);
   digits_count = strlen(userinput);
-	strtobig_int(&userinput, digits_count, &big_int);
-  
+	convertedNumbers = trtobig_int(&userinput, digits_count, &big_int);
+
+
 
 
 
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
 int strtobig_int(const char *str, int len, struct BigInt *big_int){
 
 	int counter=0;
-	for (size_t i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++) {
 
 		if (str[i] >= '0' && str[i] <= '9') {
 			(*big_int).the_int[counter] = str[len -i -1] -48;
@@ -109,4 +110,31 @@ int strtobig_int(const char *str, int len, struct BigInt *big_int){
 	}
 big_int-> digits_count = counter;
 return counter;
+}
+
+
+void print_big_int(const struct BigInt *big_int)
+{
+	bool isFirstDigit = true;
+	for (int i = 0; i < big_int->digits_count; i++) {
+		if (isFirstDigit && big_int->the_int[i] != 0)
+		{
+			isFirstDigit = false;
+		}
+
+		if (!isFirstDigit)
+		{
+			printf("%d", big_int->the_int[i]);
+		}
+	}
+}
+
+
+void copy_big_int(const struct BigInt *from, struct BigInt *to)
+{
+	for (size_t i = 0; i < from->digits_count; i++) {
+		to-> the_int[i] = from->the_int[i];
+	}
+	to->digits_count = from->digits_count;
+
 }
