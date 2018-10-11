@@ -79,24 +79,33 @@ void copy_big_int(const struct BigInt *from, struct BigInt *to);
 int main(int argc, char *argv[])
 {
   char userinput[MAX_DIGITS];
+	struct BigInt big_int;
   int digits_count;
+	int convertedNumbers;
 
+  convertedNumbers =  strtobig_int(&userinput, digits_count, &big_int);
   printf("Pyramid of numbers");
   printf("Please enter a number: ");
   scanf("%s", userinput);
   digits_count = strlen(userinput);
-  printf("%d\n", digits_count);
+  printf("%d\n", convertedNumbers);
+
+
 
   return 0;
 }
 
-int strtobig_int(const char *str, int len, struct BigInt *big_int);{
+int strtobig_int(const char *str, int len, struct BigInt *big_int){
+
+	int counter=0;
 	for (size_t i = 0; i < len; i++) {
 
-		for (size_t i = 0; i < count; i++) {
-			/* code */
+		if (str[i] >= '0' && str[i] <= '9') {
+			(*big_int).the_int[counter] = str[len -i -1] -48;
+			counter++;
 		}
+
 	}
-
-
+big_int-> digits_count = counter;
+return counter;
 }
