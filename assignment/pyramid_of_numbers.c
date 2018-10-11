@@ -83,12 +83,13 @@ int main(int argc, char *argv[])
   int digits_count;
 	int convertedNumbers;
 
-  convertedNumbers =  strtobig_int(&userinput, digits_count, &big_int);
+
   printf("Pyramid of numbers");
   printf("Please enter a number: ");
   scanf("%s", userinput);
   digits_count = strlen(userinput);
-  printf("%d\n", convertedNumbers);
+	strtobig_int(&userinput, digits_count, &big_int);
+  
 
 
 
