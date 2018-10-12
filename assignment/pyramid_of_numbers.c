@@ -14,7 +14,7 @@
  */
 #include <stdio.h>
 #include <string.h>
-#include "stdbool.h"
+#include <stdbool.h>
 
 /// The maximum number of digits allowed in a big int.
 #define MAX_DIGITS 80
