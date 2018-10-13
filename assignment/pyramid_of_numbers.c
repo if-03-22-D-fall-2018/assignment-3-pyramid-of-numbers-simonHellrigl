@@ -1,9 +1,9 @@
 /*----------------------------------------------------------
  *				HTBLA-Leonding / Class: <your class>
  * ---------------------------------------------------------
- * Exercise Number: 0
+ * Exercise Number: 3
  * Title:			Pyramid of Numbers
- * Author:			<your name>
+ * Author:    Simon Hellrigl
  * ----------------------------------------------------------
  * Description:
  * Calculates a pyramid of numbers, i.e., it multiplies a big
@@ -81,15 +81,46 @@ int main(int argc, char *argv[])
 {
   char userinput[MAX_DIGITS];
 	struct BigInt big_int;
-  int digits_count;
+	struct BigInt big_result;
+	struct BigInt big_result_div;
+	int factor=2;
+	int divisor=9;
+  int len;
 	int convertedNumbers;
 
 
-  printf("Pyramid of numbers");
-  printf("Please enter a number: ");
+  printf("Pyramid of numbers\n");
+  printf("Please enter a number\n: ");
   scanf("%s", userinput);
-  digits_count = strlen(userinput);
-	convertedNumbers = strtobig_int(&userinput, digits_count, &big_int);
+  len = strlen(userinput);
+	convertedNumbers = strtobig_int(&userinput, len, &big_int);
+	if (convertedNumbers == 0) {
+		return 0;
+	}
+
+	for (size_t i = 0; i < 8; i++) {
+		multiply(&big_int, factor, &big_result);
+		give_numbers_correct_order(&big_result);
+		give_numbers_correct_order(&big_int);
+		print_big_int(&big_int);
+		printf(" * %d = ",factor );
+		print_big_int(&big_result);
+		printf("\n");
+		give_numbers_correct_order(&big_result);
+		give_numbers_correct_order(&big_int);
+		big_int = big_result;
+		factor++;
+	}
+	give_numbers_correct_order(&big_result);
+	for (size_t i = 0; i < 8; i++) {
+		print_big_int(&big_result);
+		divide(&big_result,divisor,&big_result_div);
+		big_result = big_result_div;
+		printf(" / %d = ",divisor);
+		print_big_int(&big_result_div);
+		printf("\n");
+		divisor--;
+	}
 
 
 
@@ -131,11 +162,69 @@ void print_big_int(const struct BigInt *big_int)
 }
 
 
-void copy_big_int(const struct BigInt *from, struct BigInt *to)
+void multiply(const struct BigInt *big_int, int factor, struct BigInt *big_result)
 {
-	for (size_t i = 0; i < from->digits_count; i++) {
-		to-> the_int[i] = from->the_int[i];
-	}
-	to->digits_count = from->digits_count;
+	int overflow=0;
+	int temp;
+	big_result->digits_count = big_int->digits_count;
+	for (int i = 0; i < big_int->digits_count; i++) {
+		temp = big_int->the_int[i]*factor+overflow;
+		overflow =0;
+		if (temp>9) {
 
+			if (i == big_int->digits_count-1) {
+				big_result->digits_count++;
+				big_result->the_int[i] = temp%10;
+				big_result->the_int[i+1] = temp/10;
+			}
+			else{
+				overflow = temp/10;
+				big_result->the_int[i] = temp%10;
+			}
+		}
+		else{
+			big_result->the_int[i] = temp;
+		}
+	}
+
+}
+
+void divide(const struct BigInt *big_int, int divisor, struct BigInt *big_result)
+{
+	int overflow=0;
+	int temp;
+
+	for (size_t i = 0; i < big_int->digits_count; i++) {
+
+		big_result->the_int[i] = 0;
+		big_result->digits_count = i+1;
+		temp = overflow*10 + big_int->the_int[i];
+		if (divisor <= temp) {
+			big_result->the_int[i] = temp / divisor;
+			overflow = temp % divisor;
+		}
+		else{
+			overflow = big_int->the_int[i];
+		}
+	}
+}
+
+void copy_big_int(const struct BigInt *from, struct BigInt *to){
+	from = to;
+}
+
+//bringt die Ziffern in die richtige Reihenfolge
+void give_numbers_correct_order(struct BigInt *big_int)
+{
+	int i = big_int->digits_count-1;
+  int j = 0;
+   while(i > j)
+   {
+     int temp = big_int->the_int[i];
+		 int temp2 = big_int->the_int[j];
+     big_int->the_int[i] = temp2;
+     big_int->the_int[j] = temp;
+     i--;
+     j++;
+   }
 }
