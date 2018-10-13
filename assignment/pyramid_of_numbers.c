@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
 
   printf("Pyramid of numbers\n");
-  printf("Please enter a number\n: ");
+  printf("Please enter a number: ");
   scanf("%s", userinput);
   len = strlen(userinput);
 	convertedNumbers = strtobig_int(&userinput, len, &big_int);
@@ -209,9 +209,7 @@ void divide(const struct BigInt *big_int, int divisor, struct BigInt *big_result
 	}
 }
 
-void copy_big_int(const struct BigInt *from, struct BigInt *to){
-	from = to;
-}
+
 
 //bringt die Ziffern in die richtige Reihenfolge
 void give_numbers_correct_order(struct BigInt *big_int)
