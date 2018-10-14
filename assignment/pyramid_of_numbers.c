@@ -1,5 +1,5 @@
 /*----------------------------------------------------------
- *				HTBLA-Leonding / Class: <your class>
+ *				HTBLA-Leonding / Class: 2DHIF
  * ---------------------------------------------------------
  * Exercise Number: 3
  * Title:			Pyramid of Numbers
@@ -122,10 +122,6 @@ int main(int argc, char *argv[])
 		divisor--;
 	}
 
-
-
-
-
   return 0;
 }
 
@@ -147,14 +143,14 @@ return counter;
 
 void print_big_int(const struct BigInt *big_int)
 {
-	bool isFirstDigit = true;
+	bool isInputValid = true;
 	for (int i = 0; i < big_int->digits_count; i++) {
-		if (isFirstDigit && big_int->the_int[i] != 0)
+		if (isInputValid && big_int->the_int[i] != 0)
 		{
-			isFirstDigit = false;
+			isInputValid = false;
 		}
 
-		if (!isFirstDigit)
+		if (!isInputValid)
 		{
 			printf("%d", big_int->the_int[i]);
 		}
@@ -214,15 +210,15 @@ void divide(const struct BigInt *big_int, int divisor, struct BigInt *big_result
 //bringt die Ziffern in die richtige Reihenfolge
 void give_numbers_correct_order(struct BigInt *big_int)
 {
-	int i = big_int->digits_count-1;
-  int j = 0;
-   while(i > j)
+	int index = big_int->digits_count-1;
+  int index2 = 0;
+   while(index > index2)
    {
-     int temp = big_int->the_int[i];
-		 int temp2 = big_int->the_int[j];
-     big_int->the_int[i] = temp2;
-     big_int->the_int[j] = temp;
-     i--;
-     j++;
+     int swap = big_int->the_int[index];
+		 int swap2 = big_int->the_int[index2];
+     big_int->the_int[index] = swap2;
+     big_int->the_int[index2] = swap;
+     index--;
+     index2++;
    }
 }
